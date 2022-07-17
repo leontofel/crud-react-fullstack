@@ -22,6 +22,17 @@ const ApplicationStartContainer = styled.section`
         margin-left: 30rem;
         color: ${tertiaryColor};
     }
+    @media only screen and (max-width: 1200px){
+        h2 {
+            width: 95vw;
+            margin: 1rem 0.6rem;
+            text-align: center;
+        }
+    }      
+    a {
+        margin-left: 10%;
+    }
+
 `;
 
 export { ApplicationStartContainer }

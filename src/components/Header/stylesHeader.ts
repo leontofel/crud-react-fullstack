@@ -34,6 +34,22 @@ const HeaderWrapper = styled.header`
             }
         }
     }
+    @media only screen and (max-width: 600px){
+        flex-direction: column;
+        height: 40vh;
+        img {
+            max-width: 30vw;
+            margin: 1rem;
+        }
+    }
+    @media only screen and (max-width: 1200px){
+        flex-direction: column;
+        height: 50vh;
+        img {
+            max-width: 25vw;
+            margin: 1rem;
+        }
+    }   
 `;
 
 export { HeaderWrapper }
