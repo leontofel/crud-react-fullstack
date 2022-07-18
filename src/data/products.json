@@ -5,70 +5,49 @@
             "codigo": 1,
             "descricao": "Telefone IPhone X",
             "preco": 8000,
-            "data_cadastro": "15/07/2022",
-            "status": "disponivel",
-            "categoria": "celular",
-            "marca": "apple"
+            "data_cadastro": "15/07/2022"
         },
         {
             "_id": "",
             "codigo": 2,
             "descricao": "Telefone IPhone X",
             "preco": 8000,
-            "data_cadastro": "15/07/2022",
-            "status": "disponivel",
-            "categoria": "celular",
-            "marca": "apple"
+            "data_cadastro": "15/07/2022"
         },
         {
             "_id": "",
             "codigo": 3,
             "descricao": "Telefone IPhone X",
             "preco": 8000,
-            "data_cadastro": "15/07/2022",
-            "status": "disponivel",
-            "categoria": "celular",
-            "marca": "apple"
+            "data_cadastro": "15/07/2022"
         },
         {
             "_id": "",
             "codigo": 4,
             "descricao": "Telefone IPhone X",
             "preco": 8000,
-            "data_cadastro": "15/07/2022",
-            "status": "disponivel",
-            "categoria": "celular",
-            "marca": "apple"
+            "data_cadastro": "15/07/2022"
         },
         {
             "_id": "",
             "codigo": 8,
             "descricao": "Telefone IPhone X",
             "preco": 8000,
-            "data_cadastro": "15/07/2022",
-            "status": "disponivel",
-            "categoria": "celular",
-            "marca": "apple"
+            "data_cadastro": "15/07/2022"
         },
         {
             "_id": "",
             "codigo": 9,
             "descricao": "Telefone IPhone X",
             "preco": 8000,
-            "data_cadastro": "15/07/2022",
-            "status": "disponivel",
-            "categoria": "celular",
-            "marca": "apple"
+            "data_cadastro": "15/07/2022"
         },
         {
             "_id": "",
             "codigo": 10,
             "descricao": "Telefone IPhone X",
             "preco": 8000,
-            "data_cadastro": "15/07/2022",
-            "status": "disponivel",
-            "categoria": "celular",
-            "marca": "apple"
+            "data_cadastro": "15/07/2022"
         }
     ]
 }

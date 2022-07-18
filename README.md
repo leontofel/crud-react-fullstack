@@ -4,5 +4,5 @@ Projeto simples com a finalidade de criar uma página de manipulação de lista 
 
 ## Tecnologias utilizadas
 
-React com typescript, styled-components, axios
+React com typescript, styled-components, axios, React-Bootstrap, React Hook Form.
 

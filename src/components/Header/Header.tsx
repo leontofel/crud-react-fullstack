@@ -8,21 +8,21 @@ export default function Header() {
 
     return (
         <>
-        <HeaderWrapper>
-            <Link to='/'>
-                <img src={logo} alt="Logo da empresa" />
-            </Link>
-            <h1>LT Shop</h1>
-            <ul>
+            <HeaderWrapper>
                 <Link to='/'>
-                    <li>Início</li>
+                    <img src={logo} alt="Logo da empresa" />
                 </Link>
-                <Link to='/register-products'>
-                    <li>Cadastro de Produtos</li>
-                </Link>
-                <li>Sobre Nós</li>
-            </ul>
-        </HeaderWrapper>
+                <h1>LT Shop</h1>
+                <ul>
+                    <Link to='/'>
+                        <li>Início</li>
+                    </Link>
+                    <Link to='/register-products'>
+                        <li>Cadastro de Produtos</li>
+                    </Link>
+                    <li>Sobre Nós</li>
+                </ul>
+            </HeaderWrapper>
         </>
     );
 }

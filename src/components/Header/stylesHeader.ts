@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { backgroundColor, largeSize, primaryColor, secondaryColor } from "../../styles/variables";
 
 const HeaderWrapper = styled.header`
-
     width: 100vw;
     height: 30vh;
     background-color: ${primaryColor};

@@ -1,14 +1,7 @@
 import styled from "styled-components";
+import { primaryColor, secondaryColor } from "../../styles/variables";
 
 const ProductsListContainer = styled.div`
-
-    form {
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
 
     .button-container {
         margin: 1rem;
@@ -39,6 +32,14 @@ const FormContainer = styled.div`
             margin-left: 8rem;
             margin-top: 2rem;
         }
+        p {
+            color: red;
+        }
+    }
+    .edit-button, .create-button{
+        padding: 0.8rem;
+        color: white;
+        background-color: ${secondaryColor};
     }
 `;
 

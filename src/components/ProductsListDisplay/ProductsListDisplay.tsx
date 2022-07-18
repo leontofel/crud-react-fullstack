@@ -1,25 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IProduct } from "../../types/IProduct";
 import { FormContainer, ProductsListContainer } from "./stylesProductsListDisplay";
 import axios from 'axios';
 import Accordion from 'react-bootstrap/Accordion';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import { useForm, SubmitHandler } from "react-hook-form"
-
 
 
 export default function ProductsListDisplay() {
 
   const defaultProductsArray: IProduct[] = []
-  const [products, setProducts] = useState(defaultProductsArray)
-  const db = "http://localhost:8000/"
+  const [products, setProducts] = useState(defaultProductsArray);
+  const db = "http://localhost:8000/";
   const [show, setShow] = useState(false);
-  const [showEdit, setShowEdit] = useState(false)
-  let sucessEdit = false;
-  let sucessDelete = false;
-  let sucessAdition = false;
+  const [showEdit, setShowEdit] = useState(false);
 
   const defaultProduct: IProduct = {
     _id: "",
@@ -28,13 +24,16 @@ export default function ProductsListDisplay() {
     preco: 0,
     data_cadastro: new Date()
   }
-  const [editProduct, setEditProduct] = useState(defaultProduct)
-  const [newProduct, setNewProduct] = useState(defaultProduct)
+  const [editProduct, setEditProduct] = useState(defaultProduct);
+  const [newProduct, setNewProduct] = useState(defaultProduct);
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<IProduct>();
+  const { register, handleSubmit, formState: { errors } } = useForm<IProduct>();
+
+
   const onSubmit: SubmitHandler<IProduct> = data => {
     setEditProduct({ _id: editProduct._id, data_cadastro: editProduct.data_cadastro, codigo: data["codigo"], preco: data["preco"], descricao: data["descricao"] });
     let teste = editProduct;
+    console.log(teste);
     handleEdit(teste);
 
   }
@@ -49,38 +48,32 @@ export default function ProductsListDisplay() {
     setShow(!show);
   }
 
-
-
-  //Create
+  //Create 
   function handleNewProduct(productSubmited: IProduct) {
-    let productCode = products.length + 1;
-
+    //let productCode = products.length + 1;
     axios.post(db + "products/new", {
-      codigo: productCode,
+      codigo: productSubmited.codigo,
       descricao: productSubmited.descricao,
       preco: productSubmited.preco,
       data_cadastro: productSubmited.data_cadastro,
     })
       .then(response => {
-        console.log(response.status);
+        setShow(!show);
+        response.status === 201 ? alert("Produto foi criado com sucesso") : alert("Algo deu errado, por favor tente novamente");
+        getProducts();
       });
-    setShow(!show);
-    console.log(newProduct);
-    alert("Produto foi criado com sucesso")
 
   }
 
   //Read
   function getProducts() {
-
     axios(db + 'products')
       .then(res => setProducts(res.data))
   }
 
   //Update
-  async function handleEdit(product: IProduct) {
-
-    let result = await axios.put(`${db}products/${product._id}`, {
+  function handleEdit(product: IProduct) {
+    axios.put(`${db}products/${product._id}`, {
       codigo: (!!product.codigo ? product.codigo : undefined),
       descricao: (!product.descricao ? undefined : product.descricao),
       preco: (!product.preco ? undefined : product.preco),
@@ -88,9 +81,9 @@ export default function ProductsListDisplay() {
     })
       .then(response => {
         getProducts();
+        setShowEdit(!showEdit);
+        response.status === 200 ? alert("Produto foi editado com sucesso") : alert("Algo deu errado, por favor tente novamente");
       });
-    setShowEdit(!showEdit);
-    alert("Produto foi editado com sucesso")
   }
 
   //Delete
@@ -104,24 +97,21 @@ export default function ProductsListDisplay() {
     <>
       <ProductsListContainer>
         <h1 className='text-center m-3 fs-2'>Produtos</h1>
-        {sucessDelete && <h3>O produto foi removido com sucesso</h3>}
-        {sucessEdit && <h3>O produto foi editado com sucesso</h3>}
         <Accordion defaultActiveKey="0" >
           {products.map((item: IProduct) => {
             return (
               <Accordion.Item eventKey={item.codigo.toString()} key={item._id} >
-                <Accordion.Header onClick={() => setEditProduct({ ...editProduct, _id: item._id, data_cadastro: item.data_cadastro })}>Código: {item.codigo} - {item.descricao}</Accordion.Header>
+                <Accordion.Header onClick={() => setEditProduct(item)} >Código: {item.codigo} - {item.descricao}</Accordion.Header>
                 <Accordion.Body className='d-flex flex-row'>
                   <ul className="m-2">
-                    <li>{item.codigo}</li>
-                    <li>{item.descricao}</li>
-                    <li>R$ {item.preco}</li>
-                    <li>{item.data_cadastro.toString()}</li>
+                    <li>Código: {item.codigo}</li>
+                    <li>Descrição: {item.descricao}</li>
+                    <li>Preço: R$ {item.preco}</li>
+                    <li>Data de Cadastro: {item.data_cadastro.toString()}</li>
                   </ul>
                   <div className="m-2">
                     <Button variant="outline-success" className="m-2" onClick={() => {
                       setShowEdit(true);
-
                     }}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
@@ -142,17 +132,16 @@ export default function ProductsListDisplay() {
                       <FormContainer>
                         <form onSubmit={handleSubmit(onSubmit)}>
                           <label>Mude o código:</label>
-                          <input type="number" {...register("codigo")} />
+                          <input type="number" {...register("codigo", { pattern: /[0-9]{1,}/ })} />
                           <br />
                           <label>Mude a descrição</label>
                           <input type="text" {...register("descricao")} />
                           <br />
                           <label>Mude o preço</label>
-                          <input type="number"  {...register("preco")} />
+                          <input type="number"  {...register("preco", { pattern: /[0-9]{1,}/ })} />
                           <br />
-                          <input type="submit" />
+                          <input className="edit-button" type="submit" value="Salvar alterações" />
                         </form>
-
                       </FormContainer>
                     </Modal.Body>
                     <Modal.Footer>
@@ -182,15 +171,18 @@ export default function ProductsListDisplay() {
               <FormContainer>
                 <form onSubmit={handleSubmit(onNewProduct)}>
                   <label>Insira o código:</label>
-                  <input type="number" {...register("codigo")} />
+                  <input type="number" {...register("codigo", { required: "Por favor preencha o código para continuar", pattern: /[0-9]{1,}/ })} />
+                  {errors.codigo && <p>Preencha o código para continuar</p>}
                   <br />
                   <label>Insira a descrição</label>
-                  <input type="text" {...register("descricao")} />
+                  <input type="text" {...register("descricao", { required: "Por favor preencha a descrição para continuar" })} />
+                  {errors.descricao && <p>Preencha a descrição para continuar</p>}
                   <br />
                   <label>Insira o preço</label>
-                  <input type="number"  {...register("preco")} />
+                  <input type="number"  {...register("preco", { required: "Por favor preencha o preço para continuar", pattern: /[0-9]{1,}/ })} />
+                  {errors.preco && <p>Preencha o preço para continuar</p>}
                   <br />
-                  <input type="submit" />
+                  <input value="Criar Produto" className="create-button" type="submit" />
                 </form>
 
               </FormContainer>
